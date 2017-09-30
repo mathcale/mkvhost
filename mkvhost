@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+
+puts "*** mkvhost ***"
+puts "Another weekend project by @mathcale"
+puts "Copyright (C) 2017 Matheus Calegaro <eu@mathcale.com> - DBAD License"
+puts "https://github.com/mathcale/mkvhost"
+puts ""
+
+puts "Server name (project.dev, for example):"
+serverName = gets.chomp
+puts ""
+
+puts "Document Root (full path):"
+documentRoot = gets.chomp
+puts ""
+
+template = "<VirtualHost *:80>
+  ServerName " + serverName + "
+  DocumentRoot " + documentRoot + "
+   <Directory " + documentRoot + ">
+     AllowOverride All
+   </Directory>
+</VirtualHost>"
+
+puts "Creating VirtualHost file..."
+puts ""
+
+system "sudo echo \"" + template + "\" >> /etc/apache2/sites-available/" + serverName + ".conf"
+
+if $?.exitstatus == 0
+	puts "Activating the site with a2ensite..."
+	system("cd /etc/apache2/sites-available; sudo a2ensite " + serverName + ".conf")
+	puts ""
+
+	if $?.exitstatus == 0
+		puts "Adding your URL to the /etc/hosts file..."
+		system "sudo echo \"127.0.0.1 " + serverName + "\" >> /etc/hosts"
+		puts ""
+
+		if $?.exitstatus == 0
+			puts "Restarting apache..."
+			system "sudo service apache2 restart"
+			puts ""
+
+			puts "Done! Now back to code!"
+			puts ""
+		else
+			puts "Could not restart apache. Do it by yourself."
+			puts ""
+		end
+	else
+		puts "Could not edit the /etc/hosts file :( what a shame"
+		puts ""
+	end
+else
+	puts "Could not run the a2ensite command. what a shame :("
+	puts ""
+end
+
+# -*- mode: ruby -*-
+# vi: set ts=2 sts=2 ft=ruby noeb :
