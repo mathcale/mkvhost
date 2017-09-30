@@ -28,33 +28,33 @@ puts ""
 system "sudo echo \"" + template + "\" >> /etc/apache2/sites-available/" + serverName + ".conf"
 
 if $?.exitstatus == 0
-	puts "Activating the site with a2ensite..."
-	system("cd /etc/apache2/sites-available; sudo a2ensite " + serverName + ".conf")
-	puts ""
+  puts "Activating the site with a2ensite..."
+  system("cd /etc/apache2/sites-available; sudo a2ensite " + serverName + ".conf")
+  puts ""
 
-	if $?.exitstatus == 0
-		puts "Adding your URL to the /etc/hosts file..."
-		system "sudo echo \"127.0.0.1 " + serverName + "\" >> /etc/hosts"
-		puts ""
+  if $?.exitstatus == 0
+    puts "Adding your URL to the /etc/hosts file..."
+    system "sudo echo \"127.0.0.1 " + serverName + "\" >> /etc/hosts"
+    puts ""
 
-		if $?.exitstatus == 0
-			puts "Restarting apache..."
-			system "sudo service apache2 restart"
-			puts ""
+    if $?.exitstatus == 0
+      puts "Restarting apache..."
+      system "sudo service apache2 restart"
+      puts ""
 
-			puts "Done! Now back to code!"
-			puts ""
-		else
-			puts "Could not restart apache. Do it by yourself."
-			puts ""
-		end
-	else
-		puts "Could not edit the /etc/hosts file :( what a shame"
-		puts ""
-	end
+      puts "Done! Now back to code!"
+      puts ""
+    else
+      puts "Could not restart apache. Do it by yourself."
+      puts ""
+    end
+  else
+    puts "Could not edit the /etc/hosts file :( what a shame"
+    puts ""
+  end
 else
-	puts "Could not run the a2ensite command. what a shame :("
-	puts ""
+  puts "Could not run the a2ensite command. what a shame :("
+  puts ""
 end
 
 # -*- mode: ruby -*-
