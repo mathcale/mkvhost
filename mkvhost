@@ -2,11 +2,11 @@
 
 puts "*** mkvhost ***"
 puts "Another weekend project by @mathcale"
-puts "Copyright (C) 2017 Matheus Calegaro <eu@mathcale.com> - DBAD License"
+puts "Copyright (C) 2018 Matheus Calegaro <hello@matheus.me>"
 puts "https://github.com/mathcale/mkvhost"
 puts ""
 
-puts "Server name (project.dev, for example):"
+puts "Server name (project.devenv, for example):"
 serverName = gets.chomp
 puts ""
 
